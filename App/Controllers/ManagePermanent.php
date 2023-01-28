@@ -24,7 +24,6 @@ final class ManagePermanent
         $account = PermanentAccount::fromUsername($args['username']);
 
         if ($account === null) {
-            $response->setStatusCode(StatusCode::NOT_FOUND);
             $response->addHeader('Location', '/permanent');
             return $response;
         }

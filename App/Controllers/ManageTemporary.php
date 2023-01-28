@@ -24,7 +24,6 @@ final class ManageTemporary
         $account = TemporaryAccount::fromUsername($args['username']);
 
         if ($account === null) {
-            $response->setStatusCode(StatusCode::NOT_FOUND);
             $response->addHeader('Location', '/temporary');
             return $response;
         }
