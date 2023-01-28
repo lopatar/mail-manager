@@ -16,4 +16,9 @@ abstract class SysCommand
         exec($command, $output);
         return $output;
     }
+
+    public static function runString(string $command): string
+    {
+        return self::run($command)[0];
+    }
 }

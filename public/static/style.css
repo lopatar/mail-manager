@@ -2,3 +2,15 @@ body {
     text-align: justify-all;
     justify-content: center;
 }
+
+table {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
