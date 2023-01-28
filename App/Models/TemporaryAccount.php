@@ -21,11 +21,15 @@ final readonly class TemporaryAccount implements IMailAccount
 
     public static function fromUsername(string $username): ?self
     {
-        if (!self::exists($username)) {
+        $query = Connection::query('SELECT * FROM tempAccounts WHERE name=?', [$username]);
+
+        if ($query->num_rows === 0) {
             return null;
         }
 
+        $data = $query->fetch_assoc();
 
+        return new self($data['name'], $data['password'], intval($data['expires']));
     }
 
     /**

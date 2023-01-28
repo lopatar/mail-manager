@@ -49,4 +49,14 @@ final readonly class PermanentAccount implements IMailAccount
 
         return false;
     }
+
+    static function fromUsername(string $username): ?self
+    {
+        foreach (self::getAll() as $account) {
+            if ($account->username === $username) {
+                return $account;
+            }
+        }
+        return null;
+    }
 }

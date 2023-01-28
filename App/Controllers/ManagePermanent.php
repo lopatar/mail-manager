@@ -21,16 +21,16 @@ final class ManagePermanent
 
     public static function renderManage(Request $request, Response $response, array $args): Response
     {
-        $username = $args['username'];
+        $account = PermanentAccount::fromUsername($args['username']);
 
-        if (!PermanentAccount::exists($username)) {
+        if ($account === null) {
             $response->setStatusCode(StatusCode::NOT_FOUND);
             $response->addHeader('Location', '/permanent');
             return $response;
         }
 
         $response->createView('Management/Permanent.php')
-            ?->setProperty('username', $username);
+            ?->setProperty('account', $account);
         return $response;
     }
 }

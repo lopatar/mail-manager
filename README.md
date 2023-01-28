@@ -4,6 +4,9 @@
 
 Personal service, that is able to manage e-mail accounts, it is also able to generate temporary e-mail addresses
 
+# TODO
+  - Fetch permanent accounts once on startup to prevent unnecessary calls to getent, re-fetch on management
+
 # Features
 
 - List all permanent e-mail accounts

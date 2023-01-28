@@ -21,16 +21,16 @@ final class ManageTemporary
 
     public static function renderManage(Request $request, Response $response, array $args): Response
     {
-        $username = $args['username'];
+        $account = TemporaryAccount::fromUsername($args['username']);
 
-        if (!TemporaryAccount::exists($username)) {
+        if ($account === null) {
             $response->setStatusCode(StatusCode::NOT_FOUND);
             $response->addHeader('Location', '/temporary');
             return $response;
         }
 
         $response->createView('Management/Temporary.php')
-            ?->setProperty('username', $username);
+            ?->setProperty('account', $account);
         return $response;
     }
 }
