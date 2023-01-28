@@ -8,6 +8,10 @@ table {
     border: black solid 1px;
 }
 
-tr {
+th {
+    border: black solid 1px;
+}
+
+td {
     border: black solid 1px;
 }
