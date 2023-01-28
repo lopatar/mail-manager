@@ -19,7 +19,7 @@ readonly class PermanentAccount
      */
     public static function getAll(): array
     {
-        $commandOutput = SysCommand::runString('/usr/bin/getent group mail | /usr/bin/awk -F' . "':' '{print $3}'");
+        $commandOutput = SysCommand::runString('/usr/bin/getent group mail | /usr/bin/awk -F' . "':' '{print $4}'");
         $groupAccounts = explode(',', $commandOutput);
 
         /**
