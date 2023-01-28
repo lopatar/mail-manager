@@ -1,28 +1,41 @@
+/* I DONT KNOW CSS DONT BLAME ME PLEASE */
 body {
     text-align: center;
     justify-content: center;
+    align-content: center;
 }
 
 table {
     text-align: center;
+    justify-content: center;
+    align-content: center;
 }
-
 th {
     text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 
 td {
     text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 
 thead {
     text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 
 tbody {
     text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 
 tr {
     text-align: center;
+    justify-content: center;
+    align-content: center;
 }
