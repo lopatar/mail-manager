@@ -10,6 +10,10 @@ abstract class SysCommand
      */
     public static function run(string $command): array
     {
-        return [];
+        $command .= ' 2>&1';
+
+        $output = [];
+        exec($command, $output);
+        return $output;
     }
 }
