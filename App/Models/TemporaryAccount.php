@@ -19,6 +19,15 @@ final readonly class TemporaryAccount implements IMailAccount
         return Connection::query('SELECT name FROM tempAccounts WHERE name=?', [$username])->num_rows === 1;
     }
 
+    public static function fromUsername(string $username): ?self
+    {
+        if (!self::exists($username)) {
+            return null;
+        }
+
+
+    }
+
     /**
      * @return self[]
      * @throws DatabaseObjectNotInitialized
@@ -34,7 +43,7 @@ final readonly class TemporaryAccount implements IMailAccount
         $temporaryObjects = [];
 
         foreach ($data as $row) {
-            $temporaryObjects[] = new self($data['name'], $data['password'], intval($data['expires']));
+            $temporaryObjects[] = new self($row['name'], $row['password'], intval($row['expires']));
         }
 
         return $temporaryObjects;
