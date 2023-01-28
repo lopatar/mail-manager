@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Interfaces\IMailAccount;
+use Sdk\Database\Exceptions\DatabaseObjectNotInitialized;
 use Sdk\Database\MariaDB\Connection;
 
 final readonly class TemporaryAccount implements IMailAccount
@@ -16,9 +17,22 @@ final readonly class TemporaryAccount implements IMailAccount
 
     /**
      * @return self[]
+     * @throws DatabaseObjectNotInitialized
      */
     public static function getAll(): array
     {
-        return [];
+        $query = Connection::query('SELECT * FROM tempAccounts');
+        $data = $query->fetch_all(1);
+
+        /**
+         * @var self[] $temporaryObjects
+         */
+        $temporaryObjects = [];
+
+        foreach ($data as $row) {
+            $temporaryObjects[] = new self($data['name'], $data['password'], intval($data['expires']));
+        }
+
+        return $temporaryObjects;
     }
 }
