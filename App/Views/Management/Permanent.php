@@ -10,3 +10,5 @@ use Sdk\Render\View;
  */
 
 $account = $this->getProperty('account');
+
+echo $account->username;
