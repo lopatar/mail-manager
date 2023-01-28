@@ -1,12 +1,10 @@
 <?php
 declare(strict_types=1);
 /**
- * @var TemporaryAccount[] $accounts
+ * @var View $this
+ * @var TemporaryAccount[] $acccounts
  */
 
-/**
- * @var View $this
- */
 
 use App\AppConfig;
 use App\Models\TemporaryAccount;
@@ -14,8 +12,8 @@ use Sdk\Render\View;
 
 $accounts = $this->getProperty('accounts');
 ?>
-<a href="/"><- Go home</a> | <a href="/permanent">Manage permanent</a>
-<h3>Manage temporary e-mails</h3>
+<a href="/"><- Go home</a> | <a href="/permanent">View permanent</a>
+<h3>View temporary e-mails</h3>
 <table>
     <thead>
         <tr>

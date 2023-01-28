@@ -2,11 +2,8 @@
 declare(strict_types=1);
 
 /**
- * @var PermanentAccount[] $accounts
- */
-
-/**
  * @var View $this
+ * @var PermanentAccount[] $acccounts
  */
 
 use App\AppConfig;
@@ -15,8 +12,8 @@ use Sdk\Render\View;
 
 $accounts = $this->getProperty('accounts');
 ?>
-<a href="/"><- Go home</a> | <a href="/temporary">Manage temporary</a>
-<h3>Manage permanent e-mails</h3>
+<a href="/"><- Go home</a> | <a href="/temporary">View temporary</a>
+<h3>View permanet e-mails</h3>
 <table>
     <thead>
     <tr>

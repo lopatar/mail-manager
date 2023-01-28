@@ -15,7 +15,17 @@ $app->addMiddleware($htmlHeader);
 
 $app->view('/', 'Home.html');
 
-$app->get('/temporary', 'ManageTemporary::renderAccounts');
 $app->get('/permanent', 'ManagePermanent::renderAccounts');
+$app->get('/temporary', 'ManageTemporary::renderAccounts');
+
+$app->get('/manage/{username}', 'ManagePermanent::renderManage')
+    ?->whereParam('username')
+    ->setMaxLimit(255)
+    ->setShouldEscape(true);
+
+$app->get('/manage-temp/{username}', 'ManageTemporary::renderManage')
+    ?->whereParam('username')
+    ->setMaxLimit(255)
+    ->setShouldEscape(true);
 
 $app->run();
