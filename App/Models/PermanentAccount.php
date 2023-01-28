@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\AppConfig;
+use App\Models\Interfaces\IMailAccount;
 use App\Utils\SysCommand;
 
-readonly class PermanentAccount
+final readonly class PermanentAccount implements IMailAccount
 {
     public string $emailAddress;
     public function __construct(public string $username)
@@ -28,7 +29,10 @@ readonly class PermanentAccount
         $mailObjects = [];
 
         foreach ($groupAccounts as $account) {
-            //TODO: Check if temporary
+            if (TemporaryAccount::exists($account)) {
+                continue;
+            }
+
             $mailObjects[] = new self($account);
         }
 

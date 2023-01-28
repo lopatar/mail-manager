@@ -24,7 +24,7 @@ final class SdkConfig implements IConfig
      */
     public function isMariaDbEnabled(): bool
     {
-        return false;
+        return true;
     }
 
     /**
