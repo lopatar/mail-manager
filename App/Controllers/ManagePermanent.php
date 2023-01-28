@@ -9,7 +9,7 @@ use Sdk\Http\Response;
 
 final class ManagePermanent
 {
-    public static function render(Request $request, Response $response, array $args): Response
+    public static function renderAccounts(Request $request, Response $response, array $args): Response
     {
         $permanentAccounts = PermanentAccount::getAll();
         $response->createView('Permanent.php')

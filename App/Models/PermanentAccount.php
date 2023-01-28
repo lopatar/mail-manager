@@ -19,7 +19,7 @@ readonly class PermanentAccount
      */
     public static function getAll(): array
     {
-        $commandOutput = SysCommand::runString('/usr/bin/getent group mail');
+        $commandOutput = SysCommand::runString('/usr/bin/getent group mail | /usr/bin/awk -F' . "':' '{print $3}'");
         $groupAccounts = explode(',', $commandOutput);
 
         /**
@@ -27,23 +27,22 @@ readonly class PermanentAccount
          */
         $mailObjects = [];
 
-        for ($i = 0; $i < count($groupAccounts); $i++) {
-            $username = $groupAccounts[$i];
-
-            if ($i === 0) {
-                $colonIndex = strpos($username, ':', -1);
-
-                if ($colonIndex === false) {
-                    continue;
-                }
-
-                $username = substr($username, $colonIndex + 1);
-            }
-
-            //TODO: Check if account is temporary!
-            $mailObjects[] = new self($username);
+        foreach ($groupAccounts as $account) {
+            //TODO: Check if temporary
+            $mailObjects[] = new self($account);
         }
 
         return $mailObjects;
+    }
+
+    public static function exists(string $username): bool
+    {
+        foreach (self::getAll() as $account) {
+            if ($account->username === $username) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

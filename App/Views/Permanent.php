@@ -15,6 +15,7 @@ $accounts = $this->getProperty('accounts');
     <thead>
     <tr>
         <th>E-mail account</th>
+        <th>Options</th>
     </tr>
     </thead>
 
@@ -24,6 +25,7 @@ $accounts = $this->getProperty('accounts');
         ?>
         <tr>
             <td><?= $account->emailAddress ?></td>
+            <td><a href="/manage/<?= $account->username ?>">Manage</a></td>
         </tr>
     <?php } ?>
     </tbody>

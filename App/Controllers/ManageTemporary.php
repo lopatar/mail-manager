@@ -8,7 +8,7 @@ use Sdk\Http\Response;
 
 final class ManageTemporary
 {
-    public static function render(Request $request, Response $response, array $args): Response
+    public static function renderAccounts(Request $request, Response $response, array $args): Response
     {
         $response->createView('Temporary.php');
         return $response;

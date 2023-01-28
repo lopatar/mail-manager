@@ -15,7 +15,7 @@ $app->addMiddleware($htmlHeader);
 
 $app->view('/', 'Home.html');
 
-$app->get('/temporary', 'ManageTemporary::render');
-$app->get('/permanent', 'ManagePermanent::render');
+$app->get('/temporary', 'ManageTemporary::renderAccounts');
+$app->get('/permanent', 'ManagePermanent::renderAccounts');
 
 $app->run();
