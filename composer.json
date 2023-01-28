@@ -1,21 +1,21 @@
 {
-    "authors": [
-        {
-            "email": "jiri@lopatar.me",
-            "name": "Jiří Lopatář"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "App\\": "App/"
-        }
-    },
-    "description": "Mail manager used for managing permanent & temporary e-mail accounts",
-    "license": "WTFPL",
-    "name": "lopatar/mail-manager",
-    "require": {
-        "lopatar/php-sdkv2": "^2.6",
-        "ext-openssl": "*"
-    },
-    "type": "project"
+  "authors": [
+    {
+      "email": "jiri@lopatar.me",
+      "name": "Jiří Lopatář"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "App/"
+    }
+  },
+  "description": "Mail manager used for managing permanent & temporary e-mail accounts",
+  "license": "WTFPL",
+  "name": "lopatar/mail-manager",
+  "require": {
+    "lopatar/php-sdkv2": "^2.6",
+    "ext-openssl": "*"
+  },
+  "type": "project"
 }

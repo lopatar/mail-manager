@@ -2,9 +2,13 @@
 declare(strict_types=1);
 
 namespace App\Utils;
-
 abstract class SysCommand
 {
+    public static function runString(string $command): string
+    {
+        return self::run($command)[0];
+    }
+
     /**
      * @return string[]
      */
@@ -15,10 +19,5 @@ abstract class SysCommand
         $output = [];
         exec($command, $output);
         return $output;
-    }
-
-    public static function runString(string $command): string
-    {
-        return self::run($command)[0];
     }
 }

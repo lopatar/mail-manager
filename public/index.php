@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\SdkConfig;
 use App\Middleware\HtmlHeader;
+use App\SdkConfig;
 use Sdk\App;
 
 $config = new SdkConfig();

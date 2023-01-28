@@ -4,11 +4,15 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\AppConfig;
-use Utils\SysCommand;
+use App\Utils\SysCommand;
 
-class PermanentAccount
+readonly class PermanentAccount
 {
-    public function __construct(public readonly string $username) {}
+    public string $emailAddress;
+    public function __construct(public string $username)
+    {
+        $this->emailAddress = "$this->username@" . AppConfig::EMAIL_DOMAIN;
+    }
 
     /**
      * @return self[]
@@ -41,10 +45,5 @@ class PermanentAccount
         }
 
         return $mailObjects;
-    }
-
-    public function getMailAddress(): string
-    {
-        return "$this->username@" . AppConfig::EMAIL_DOMAIN;
     }
 }

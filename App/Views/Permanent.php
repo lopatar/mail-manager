@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * @var PermanentAccount[] $accounts
  */
@@ -12,17 +13,17 @@ $accounts = $this->getProperty('accounts');
 <h3>Manage permanent e-mails</h3>
 <table>
     <thead>
-        <tr>
-            <th>E-mail account</th>
-        </tr>
+    <tr>
+        <th>E-mail account</th>
+    </tr>
     </thead>
 
     <tbody>
     <?php
-        foreach ($accounts as $account) {
-    ?>
+    foreach ($accounts as $account) {
+        ?>
         <tr>
-            <td><?= $account->getMailAddress() ?></td>
+            <td><?= $account->emailAddress ?></td>
         </tr>
     <?php } ?>
     </tbody>
