@@ -3,13 +3,17 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\AppConfig;
 use App\Models\Interfaces\IMailAccount;
 use Sdk\Database\Exceptions\DatabaseObjectNotInitialized;
 use Sdk\Database\MariaDB\Connection;
 
 final readonly class TemporaryAccount implements IMailAccount
 {
-    public function __construct(public string $username, public string $password, public int $expiresTimestamp) {}
+    public string $emailAddress;
+    public function __construct(public string $username, public string $password, public int $expiresTimestamp,) {
+        $this->emailAddress = "$this->username@" . AppConfig::EMAIL_DOMAIN;
+    }
 
     public static function exists(string $username): bool {
         return Connection::query('SELECT name FROM tempAccounts WHERE name=?', [$username])->num_rows === 1;
@@ -34,5 +38,15 @@ final readonly class TemporaryAccount implements IMailAccount
         }
 
         return $temporaryObjects;
+    }
+
+    public function expiresString(): string
+    {
+        return date('j. n. Y', $this->expiresTimestamp);
+    }
+
+    public function isExpired(): bool
+    {
+        return time() >= $this->expiresTimestamp;
     }
 }

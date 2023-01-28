@@ -5,7 +5,12 @@ declare(strict_types=1);
  * @var PermanentAccount[] $accounts
  */
 
+/**
+ * @var View $this
+ */
+
 use App\Models\PermanentAccount;
+use Sdk\Render\View;
 
 $accounts = $this->getProperty('accounts');
 ?>
@@ -14,7 +19,7 @@ $accounts = $this->getProperty('accounts');
 <table>
     <thead>
     <tr>
-        <th>E-mail account</th>
+        <th>E-mail address</th>
         <th>Options</th>
     </tr>
     </thead>
