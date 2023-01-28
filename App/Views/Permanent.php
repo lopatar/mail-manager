@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @var View $this
  */
 
+use App\AppConfig;
 use App\Models\PermanentAccount;
 use Sdk\Render\View;
 
@@ -30,7 +31,12 @@ $accounts = $this->getProperty('accounts');
         ?>
         <tr>
             <td><?= $account->emailAddress ?></td>
-            <td><a href="/manage/<?= $account->username ?>">Manage</a></td>
+            <td>
+                <?php if (AppConfig::ROUNDCUBE_LINK !== '') { ?>
+                    <a href="<?= AppConfig::ROUNDCUBE_LINK ?>?_user=<?= $account->username ?>">Redirect to Roundcube</a> |
+                <?php } ?>
+                <a href="/manage/<?= $account->username ?>">Manage</a>
+            </td>
         </tr>
     <?php } ?>
     </tbody>
