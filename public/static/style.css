@@ -5,7 +5,6 @@ body {
 
 table {
     text-align: center;
-    justify-content: center;
 }
 
 th {
@@ -13,5 +12,17 @@ th {
 }
 
 td {
+    text-align: center;
+}
+
+thead {
+    text-align: center;
+}
+
+tbody {
+    text-align: center;
+}
+
+tr {
     text-align: center;
 }
