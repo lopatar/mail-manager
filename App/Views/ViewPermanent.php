@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 /**
  * @var View $this
- * @var PermanentAccount[] $acccounts
+ * @var PermanentAccount[] $accounts
  */
 
 use App\Models\PermanentAccount;
 use Sdk\Render\View;
-use Sdk\Utils\Hashing\PasswordProvider;
 use Sdk\Utils\Random;
 
 $accounts = $this->getProperty('accounts');
@@ -26,7 +25,7 @@ $accounts = $this->getProperty('accounts');
 
     <tbody>
     <?php
-    foreach ($acccounts as $account) {
+    foreach ($accounts as $account) {
         ?>
         <tr>
             <td><?= $account->emailAddress ?></td>

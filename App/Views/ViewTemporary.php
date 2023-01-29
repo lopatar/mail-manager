@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 /**
  * @var View $this
- * @var TemporaryAccount[] $acccounts
+ * @var TemporaryAccount[] $accounts
  */
 
 use App\AppConfig;
@@ -26,7 +26,7 @@ $accounts = $this->getProperty('accounts');
     </thead>
 
     <tbody>
-    <?php foreach ($acccounts as $account) { ?>
+    <?php foreach ($accounts as $account) { ?>
         <tr>
             <td><?= $account->emailAddress ?></td>
             <td><?= $account->password ?>/td>
