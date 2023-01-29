@@ -6,8 +6,8 @@ namespace App\Models;
 use App\AppConfig;
 use App\Models\Enums\AccountStatus;
 use App\Models\Interfaces\IMailAccount;
-use App\Models\Traits\RoundcubeLinkTrait;
 use App\Models\Traits\AccountSystemUtilsTrait;
+use App\Models\Traits\RoundcubeLinkTrait;
 use Sdk\Database\Exceptions\DatabaseObjectNotInitialized;
 use Sdk\Database\MariaDB\Connection;
 
@@ -38,8 +38,7 @@ final readonly class TemporaryAccount implements IMailAccount
         $expires = intval($data['expires']);
         $status = AccountStatus::from($expires);
 
-        if (time() >= $expires)
-        {
+        if (time() >= $expires) {
             $status = AccountStatus::WAITING_FOR_DELETION;
         }
 
@@ -64,8 +63,7 @@ final readonly class TemporaryAccount implements IMailAccount
             $expires = intval($row['expires']);
             $status = AccountStatus::from($expires);
 
-            if (time() >= $expires)
-            {
+            if (time() >= $expires) {
                 $status = AccountStatus::WAITING_FOR_DELETION;
             }
 

@@ -30,7 +30,7 @@ $accounts = $this->getProperty('accounts');
             <td><?= $account->emailAddress ?></td>
             <td><?= $account->password ?>/td>
             <td><?= $account->expiresString() ?></td>
-            <td><?= $account->status ?></td>
+            <td><?= $account->status->name ?></td>
             <td>
                 <?= $account->getRoundcubeLink() ?>
                 <a href="/manage-temp/<?= $account->username ?>">Manage</a>

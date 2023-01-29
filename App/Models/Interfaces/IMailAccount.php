@@ -12,5 +12,6 @@ interface IMailAccount
     static function fromUsername(string $username): ?self;
 
     function getRoundcubeLink(): string;
+
     function systemUserExists(): bool;
 }

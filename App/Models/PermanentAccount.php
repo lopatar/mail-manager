@@ -6,8 +6,8 @@ namespace App\Models;
 use App\AppConfig;
 use App\Models\Enums\AccountStatus;
 use App\Models\Interfaces\IMailAccount;
-use App\Models\Traits\RoundcubeLinkTrait;
 use App\Models\Traits\AccountSystemUtilsTrait;
+use App\Models\Traits\RoundcubeLinkTrait;
 use App\Utils\SysCommand;
 
 final readonly class PermanentAccount implements IMailAccount

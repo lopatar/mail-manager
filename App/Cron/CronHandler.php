@@ -18,6 +18,14 @@ foreach ($data as $row) {
 
     $account = TemporaryAccount::fromUsername($row['user']);
 
+    switch ($account->status) {
+        case AccountStatus::WAITING_FOR_CREATION:
 
+            break;
+        case AccountStatus::WAITING_FOR_DELETION:
+            $account->deleteSystemUser();
+            break;
+
+    }
 }
 

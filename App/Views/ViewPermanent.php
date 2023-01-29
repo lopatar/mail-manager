@@ -17,6 +17,7 @@ $accounts = $this->getProperty('accounts');
     <thead>
     <tr>
         <th>E-mail address</th>
+        <th>Status</th>
         <th>Options</th>
     </tr>
     </thead>
@@ -27,6 +28,7 @@ $accounts = $this->getProperty('accounts');
         ?>
         <tr>
             <td><?= $account->emailAddress ?></td>
+            <td><?= $account->status->name ?></td>
             <td>
                 <?= $account->getRoundcubeLink() ?>
                 <a href="/manage/<?= $account->username ?>">Manage</a>

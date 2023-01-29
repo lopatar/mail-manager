@@ -8,6 +8,14 @@ use Sdk\Database\MariaDB\Connection;
 
 trait AccountSystemUtilsTrait
 {
+    public function createSystemUser(): void
+    {
+        if ($this->systemUserExists()) {
+            return;
+        }
+
+    }
+
     public function systemUserExists(): bool
     {
         $commandOutput = SysCommand::runString("/usr/bin/id -u $this->username");
