@@ -40,7 +40,7 @@ final class ManageTemporary
 
         if ($username === null || $username === '') {
             do {
-                $username = Random::stringSafe(24);
+                $username = Random::stringSafe(12);
             } while (TemporaryAccount::exists($username));
         }
 

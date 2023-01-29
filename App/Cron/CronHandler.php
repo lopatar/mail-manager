@@ -17,6 +17,10 @@ foreach ($data as $row) {
 
     $account = ($isPermanent) ? PermanentAccount::fromUsername($username) : TemporaryAccount::fromUsername($username);
 
+    if ($account === null) {
+        continue;
+    }
+
     switch ($account->status) {
         case AccountStatus::WAITING_FOR_CREATION:
             $account->createSystemUser($isPermanent);
