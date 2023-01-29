@@ -17,6 +17,6 @@ trait RoundcubeLinkTrait
 
         $url = "$roundcubeLink?_user=$this->username";
 
-        return "<a href=\"$url\">Redirect to roundcube | </a>";
+        return "<a href=\"$url\">Redirect to roundcube</a> | ";
     }
 }
