@@ -14,6 +14,7 @@ abstract class SysCommand
      */
     public static function run(string $command): array
     {
+        $command = escapeshellarg($command);
         $command .= ' 2>&1';
 
         $output = [];
