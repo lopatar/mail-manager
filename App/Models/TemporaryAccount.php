@@ -6,6 +6,7 @@ namespace App\Models;
 use App\AppConfig;
 use App\Models\Interfaces\IMailAccount;
 use App\Models\Traits\RoundcubeLinkTrait;
+use App\Models\Traits\AccountSystemUtilsTrait;
 use Sdk\Database\Exceptions\DatabaseObjectNotInitialized;
 use Sdk\Database\MariaDB\Connection;
 
@@ -72,4 +73,5 @@ final readonly class TemporaryAccount implements IMailAccount
     }
 
     use RoundcubeLinkTrait;
+    use AccountSystemUtilsTrait;
 }
