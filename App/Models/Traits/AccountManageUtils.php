@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace App\Models\Traits;
 
 use App\AppConfig;
+use App\Models\Enums\AccountStatus;
 
-trait RoundcubeLinkTrait
+trait AccountManageUtils
 {
     function getRoundcubeLink(): string
     {
@@ -18,5 +19,10 @@ trait RoundcubeLinkTrait
         $url = "$roundcubeLink?_user=$this->username";
 
         return "<a href=\"$url\">Redirect to roundcube</a> | ";
+    }
+
+    function isCreated(): bool
+    {
+        return $this->status === AccountStatus::CREATED;
     }
 }

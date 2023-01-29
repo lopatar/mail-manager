@@ -13,6 +13,8 @@ interface IMailAccount
 
     function getRoundcubeLink(): string;
 
+    function isCreated(): bool;
+
     function createSystemUser(bool $permanentAccount): void;
 
     function systemUserExists(): bool;

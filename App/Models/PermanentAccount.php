@@ -6,8 +6,8 @@ namespace App\Models;
 use App\AppConfig;
 use App\Models\Enums\AccountStatus;
 use App\Models\Interfaces\IMailAccount;
+use App\Models\Traits\AccountManageUtils;
 use App\Models\Traits\AccountSystemUtilsTrait;
-use App\Models\Traits\RoundcubeLinkTrait;
 use App\Utils\SysCommand;
 use Sdk\Database\Exceptions\DatabaseObjectNotInitialized;
 use Sdk\Database\MariaDB\Connection;
@@ -94,6 +94,6 @@ final readonly class PermanentAccount implements IMailAccount
         Connection::query('INSERT INTO Accounts(name, password) VALUES(?,?)', [$username, $password]);
     }
 
-    use RoundcubeLinkTrait;
+    use AccountManageUtils;
     use AccountSystemUtilsTrait;
 }

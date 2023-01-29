@@ -31,8 +31,10 @@ $accounts = $this->getProperty('accounts');
             <td><?= $account->emailAddress ?></td>
             <td><?= $account->status->name ?></td>
             <td>
-                <?= $account->getRoundcubeLink() ?>
-                <a href="/manage/<?= $account->username ?>">Manage</a>
+                <?php if ($account->isCreated()) { ?>
+                    <?= $account->getRoundcubeLink() ?>
+                    <a href="/manage/<?= $account->username ?>">Manage</a>
+                <?php } ?>
             </td>
         </tr>
     <?php } ?>

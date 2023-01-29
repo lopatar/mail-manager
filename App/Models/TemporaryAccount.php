@@ -6,8 +6,8 @@ namespace App\Models;
 use App\AppConfig;
 use App\Models\Enums\AccountStatus;
 use App\Models\Interfaces\IMailAccount;
+use App\Models\Traits\AccountManageUtils;
 use App\Models\Traits\AccountSystemUtilsTrait;
-use App\Models\Traits\RoundcubeLinkTrait;
 use Sdk\Database\Exceptions\DatabaseObjectNotInitialized;
 use Sdk\Database\MariaDB\Connection;
 
@@ -87,6 +87,6 @@ final readonly class TemporaryAccount implements IMailAccount
         return time() >= $this->expiresTimestamp;
     }
 
-    use RoundcubeLinkTrait;
+    use AccountManageUtils;
     use AccountSystemUtilsTrait;
 }
