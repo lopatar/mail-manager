@@ -41,13 +41,24 @@ $accounts = $this->getProperty('accounts');
     </tbody>
 </table>
 <h3>Create temporary e-mail</h3>
-<form method="POST" action="/api/permanent/create">
+<form method="POST" action="/api/temporary/create">
     <div>
-        <input type="text" name="username" maxlength="32" placeholder="Username - empty for random">
+        <div>
+            <label for="username">
+                Username
+            </label>
+        </div>
+        <input type="text" id="username" name="username" maxlength="32" placeholder="Username - empty for random">
     </div>
 
     <div>
-        <input type="number" name="expirationMinutes" placeholder="Expiration minutes" min="30" max="<?= AppConfig::MAX_TEMPORARY_EMAIL_MINUTES ?>" value="30" required>
+        <div>
+            <label for="expirationMinutes">
+                Expiration (minutes)
+            </label>
+        </div>
+        <input type="number" id="expirationMinutes" name="expirationMinutes" placeholder="Expiration minutes" min="30"
+               max="<?= AppConfig::MAX_TEMPORARY_EMAIL_MINUTES ?>" value="30" required>
     </div>
 
     <div>

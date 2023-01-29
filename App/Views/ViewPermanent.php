@@ -41,10 +41,21 @@ $accounts = $this->getProperty('accounts');
 <h3>Create permanent e-mail</h3>
 <form method="POST" action="/api/permanent/create">
     <div>
-        <input type="text" name="username" maxlength="32" placeholder="Username" required>
+        <div>
+            <label for="username">
+                Username
+            </label>
+        </div>
+        <input type="text" id="username" name="username" maxlength="32" placeholder="Username" required>
     </div>
     <div>
-        <input type="password" name="password" max="64" placeholder="Password" value="<?= Random::stringSafe(32) ?>" required>
+        <div>
+            <label for="password">
+                Password
+            </label>
+        </div>
+        <input type="password" id="password" name="password" max="64" placeholder="Password"
+               value="<?= Random::stringSafe(32) ?>" required>
     </div>
 
     <div>
