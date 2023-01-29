@@ -29,7 +29,7 @@ $accounts = $this->getProperty('accounts');
     <?php foreach ($accounts as $account) { ?>
         <tr>
             <td><?= $account->emailAddress ?></td>
-            <td><?= $account->password ?>/td>
+            <td><?= $account->password ?></td>
             <td><?= $account->expiresString() ?></td>
             <td><?= $account->status->name ?></td>
             <td>
