@@ -24,6 +24,8 @@ foreach ($data as $row) {
         case AccountStatus::WAITING_FOR_DELETION:
             $account->deleteSystemUser($isPermanent);
             break;
+        case AccountStatus::CREATED:
+            break;
     }
 }
 

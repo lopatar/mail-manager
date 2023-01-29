@@ -73,6 +73,12 @@ final readonly class TemporaryAccount implements IMailAccount
         return $temporaryObjects;
     }
 
+    public static function create(string $username, string $password, int $expirationMinutes)
+    {
+        $expirationTimestamp = time() + ($expirationMinutes * 60);
+        Connection::query('INSERT INTO Accounts(name, password, expires, status) VALUES(?,?,?,?)', [$username, $password, $expirationTimestamp, AccountStatus::WAITING_FOR_CREATION->value], 'ssii');
+    }
+
     public function expiresString(): string
     {
         if ($this->isExpired()) {
