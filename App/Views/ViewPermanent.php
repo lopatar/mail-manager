@@ -54,8 +54,8 @@ $accounts = $this->getProperty('accounts');
                 Password
             </label>
         </div>
-        <input type="password" id="password" name="password" max="64" placeholder="Password"
-               value="<?= Random::stringSafe(32) ?>" required>
+        <input type="password" id="password" name="password" maxlength="64" minlength="24" placeholder="Password"
+               value="<?= Random::stringSafe(48) ?>" required>
         <button id="showPasswordBtn" onclick="showPassword()">Show</button>
     </div>
 

@@ -17,7 +17,9 @@ trait AccountSystemUtilsTrait
 
         SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $this->password) $this->username");
 
-        if (!$permanentAccount) {
+        if ($permanentAccount) {
+            Connection::query('DELETE FROM Accounts WHERE user=?', [$this->username]);
+        } else {
             Connection::query('UPDATE Accounts SET status=? WHERE user=?', [AccountStatus::CREATED->value, $this->username], 'is');
         }
     }
@@ -28,13 +30,16 @@ trait AccountSystemUtilsTrait
         return !str_contains($commandOutput, 'no such user');
     }
 
-    public function deleteSystemUser(): void
+    public function deleteSystemUser(bool $isPermanent): void
     {
         if (!$this->systemUserExists()) {
             return;
         }
 
         SysCommand::run("/usr/sbin/deluser --remove-all-files $this->username");
-        Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
+
+        if (!$isPermanent) {
+            Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
+        }
     }
 }

@@ -6,7 +6,6 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Middleware\HtmlHeader;
 use App\SdkConfig;
 use Sdk\App;
-use Sdk\Middleware\CSRF;
 use Sdk\Middleware\HttpBasicAuth;
 
 $config = new SdkConfig();
@@ -37,5 +36,7 @@ $app->get('/manage-temp/{username}', 'ManageTemporary::renderManage')
     ?->whereParam('username')
     ->setMaxLimit(255)
     ->setShouldEscape(true);
+
+$app->post('/api/permanent/create', 'ManagePermanent::createAccount');
 
 $app->run();

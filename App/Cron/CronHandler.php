@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Models\Enums\AccountStatus;
+use App\Models\PermanentAccount;
 use App\Models\TemporaryAccount;
 use Sdk\Database\MariaDB\Connection;
 
@@ -11,19 +12,17 @@ $query = Connection::query('SELECT * FROM Accounts');
 $data = $query->fetch_all(1);
 
 foreach ($data as $row) {
-    if ($row['expires'] === null) {
+    $isPermanent = is_null($row['expires']);
+    $username = $row['user'];
 
-        continue;
-    }
-
-    $account = TemporaryAccount::fromUsername($row['user']);
+    $account = ($isPermanent) ? PermanentAccount::fromUsername($username) : TemporaryAccount::fromUsername($username);
 
     switch ($account->status) {
         case AccountStatus::WAITING_FOR_CREATION:
-            $account->createSystemUser(false);
+            $account->createSystemUser($isPermanent);
             break;
         case AccountStatus::WAITING_FOR_DELETION:
-            $account->deleteSystemUser();
+            $account->deleteSystemUser($isPermanent);
             break;
     }
 }

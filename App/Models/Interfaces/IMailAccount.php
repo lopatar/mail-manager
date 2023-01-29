@@ -11,5 +11,6 @@ interface IMailAccount
     function getRoundcubeLink(): string;
     function createSystemUser(bool $permanentAccount): void;
     function systemUserExists(): bool;
-    function deleteSystemUser(): void;
+
+    function deleteSystemUser(bool $permanentAccount): void;
 }

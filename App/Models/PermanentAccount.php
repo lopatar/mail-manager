@@ -9,6 +9,7 @@ use App\Models\Interfaces\IMailAccount;
 use App\Models\Traits\AccountSystemUtilsTrait;
 use App\Models\Traits\RoundcubeLinkTrait;
 use App\Utils\SysCommand;
+use Sdk\Database\MariaDB\Connection;
 
 final readonly class PermanentAccount implements IMailAccount
 {
@@ -62,6 +63,11 @@ final readonly class PermanentAccount implements IMailAccount
         }
 
         return false;
+    }
+
+    public static function create(string $username, string $password): void
+    {
+        Connection::query('INSERT INTO Accounts(name, password) VALUES(?,?)', [$username, $password]);
     }
 
     use RoundcubeLinkTrait;
