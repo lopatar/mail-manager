@@ -9,6 +9,7 @@ use App\Models\Interfaces\IMailAccount;
 use App\Models\Traits\AccountSystemUtilsTrait;
 use App\Models\Traits\RoundcubeLinkTrait;
 use App\Utils\SysCommand;
+use Sdk\Database\Exceptions\DatabaseObjectNotInitialized;
 use Sdk\Database\MariaDB\Connection;
 
 final readonly class PermanentAccount implements IMailAccount
@@ -51,7 +52,8 @@ final readonly class PermanentAccount implements IMailAccount
             $mailObjects[] = new self($account, AccountStatus::CREATED);
         }
 
-        return $mailObjects;
+        $pendingAccounts = self::getPendingAccounts();
+        return array_merge($mailObjects, $pendingAccounts);
     }
 
     public static function exists(string $username): bool
@@ -63,6 +65,28 @@ final readonly class PermanentAccount implements IMailAccount
         }
 
         return false;
+    }
+
+    /**
+     * @return self[]
+     * @throws DatabaseObjectNotInitialized
+     */
+    private static function getPendingAccounts(): array
+    {
+        $query = Connection::query('SELECT * FROM Accounts WHERE expires=NULL');
+        $data = $query->fetch_all(1);
+
+        /**
+         * @var self[] $mailObjects
+         */
+        $mailObjects = [];
+
+        foreach ($data as $row) {
+            $status = AccountStatus::from(intval($row['status']));
+            $mailObjects[] = new self($row['username'], $status);
+        }
+
+        return $mailObjects;
     }
 
     public static function create(string $username, string $password): void
