@@ -13,7 +13,7 @@ use Sdk\Render\View;
 $accounts = $this->getProperty('accounts');
 ?>
 <a href="/"><- Go home</a> | <a href="/temporary">View temporary</a>
-<h3>View permanet e-mails</h3>
+<h3>View permanent e-mails</h3>
 <table>
     <thead>
     <tr>
@@ -24,14 +24,12 @@ $accounts = $this->getProperty('accounts');
 
     <tbody>
     <?php
-    foreach ($accounts as $account) {
+    foreach ($acccounts as $account) {
         ?>
         <tr>
             <td><?= $account->emailAddress ?></td>
             <td>
-                <?php if (AppConfig::ROUNDCUBE_LINK !== '') { ?>
-                    <a href="<?= AppConfig::ROUNDCUBE_LINK ?>?_user=<?= $account->username ?>">Redirect to Roundcube</a> |
-                <?php } ?>
+                <?= $account->getRoundcubeLink() ?>
                 <a href="/manage/<?= $account->username ?>">Manage</a>
             </td>
         </tr>

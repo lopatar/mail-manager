@@ -10,5 +10,9 @@ use Sdk\Render\View;
  */
 
 $account = $this->getProperty('account');
-
-echo $account->username;
+?>
+<a href="/permanent"><- Go back</a> | <a href="/temporary">View temporary</a>
+<h3>Managing permanent e-mail</h3>
+<h4><?= $account->emailAddress ?></h4>
+</body>
+</html>

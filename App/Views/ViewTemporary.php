@@ -5,7 +5,6 @@ declare(strict_types=1);
  * @var TemporaryAccount[] $acccounts
  */
 
-
 use App\AppConfig;
 use App\Models\TemporaryAccount;
 use Sdk\Render\View;
@@ -18,20 +17,22 @@ $accounts = $this->getProperty('accounts');
     <thead>
         <tr>
             <th>E-mail address</th>
+            <th>Password</th>
             <th>Expires</th>
+            <th>Status</th>
             <th>Options</th>
         </tr>
     </thead>
 
     <tbody>
-        <?php foreach ($accounts as $account) { ?>
+        <?php foreach ($acccounts as $account) { ?>
                 <tr>
                     <td><?= $account->emailAddress ?></td>
+                    <td><?= $account->password ?>/td>
                     <td><?= $account->expiresString() ?></td>
+                    <td><?= $account->status ?></td>
                     <td>
-                        <?php if (AppConfig::ROUNDCUBE_LINK !== '') { ?>
-                            <a href="<?= AppConfig::ROUNDCUBE_LINK ?>?_user=<?= $account->username ?>">Redirect to Roundcube</a> |
-                        <?php } ?>
+                        <?= $account->getRoundcubeLink() ?>
                         <a href="/manage-temp/<?= $account->username ?>">Manage</a>
                     </td>
                 </tr>
