@@ -6,7 +6,6 @@ declare(strict_types=1);
  * @var PermanentAccount[] $acccounts
  */
 
-use App\AppConfig;
 use App\Models\PermanentAccount;
 use Sdk\Render\View;
 

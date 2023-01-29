@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\PermanentAccount;
-use Sdk\Http\Entities\StatusCode;
 use Sdk\Http\Request;
 use Sdk\Http\Response;
 

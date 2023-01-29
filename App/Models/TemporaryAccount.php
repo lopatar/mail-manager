@@ -12,11 +12,14 @@ use Sdk\Database\MariaDB\Connection;
 final readonly class TemporaryAccount implements IMailAccount
 {
     public string $emailAddress;
-    public function __construct(public string $username, public string $password, public int $expiresTimestamp, public string $status) {
+
+    public function __construct(public string $username, public string $password, public int $expiresTimestamp, public string $status)
+    {
         $this->emailAddress = "$this->username@" . AppConfig::EMAIL_DOMAIN;
     }
 
-    public static function exists(string $username): bool {
+    public static function exists(string $username): bool
+    {
         return Connection::query('SELECT name FROM Accounts WHERE name=?', [$username])->num_rows === 1;
     }
 

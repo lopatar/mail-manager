@@ -11,9 +11,20 @@ use App\Utils\SysCommand;
 final readonly class PermanentAccount implements IMailAccount
 {
     public string $emailAddress;
+
     public function __construct(public string $username)
     {
         $this->emailAddress = "$this->username@" . AppConfig::EMAIL_DOMAIN;
+    }
+
+    static function fromUsername(string $username): ?self
+    {
+        foreach (self::getAll() as $account) {
+            if ($account->username === $username) {
+                return $account;
+            }
+        }
+        return null;
     }
 
     /**
@@ -49,16 +60,6 @@ final readonly class PermanentAccount implements IMailAccount
         }
 
         return false;
-    }
-
-    static function fromUsername(string $username): ?self
-    {
-        foreach (self::getAll() as $account) {
-            if ($account->username === $username) {
-                return $account;
-            }
-        }
-        return null;
     }
 
     use RoundcubeLinkTrait;
