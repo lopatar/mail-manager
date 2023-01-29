@@ -73,7 +73,7 @@ final readonly class PermanentAccount implements IMailAccount
      */
     private static function getPendingAccounts(): array
     {
-        $query = Connection::query('SELECT * FROM Accounts WHERE expires=NULL');
+        $query = Connection::query('SELECT * FROM Accounts WHERE expires IS NULL');
         $data = $query->fetch_all(1);
 
         /**
