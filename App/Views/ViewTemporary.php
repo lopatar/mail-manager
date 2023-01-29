@@ -33,8 +33,10 @@ $accounts = $this->getProperty('accounts');
             <td><?= $account->expiresString() ?></td>
             <td><?= $account->status->name ?></td>
             <td>
-                <?= $account->getRoundcubeLink() ?>
-                <a href="/manage-temp/<?= $account->username ?>">Manage</a>
+                <?php if ($account->isCreated()) { ?>
+                    <?= $account->getRoundcubeLink() ?>
+                    <a href="/manage-temp/<?= $account->username ?>">Manage</a>
+                <?php } ?>
             </td>
         </tr>
     <?php } ?>
