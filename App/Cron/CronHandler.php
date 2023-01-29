@@ -6,7 +6,7 @@ use App\Models\PermanentAccount;
 use App\Models\TemporaryAccount;
 use Sdk\Database\MariaDB\Connection;
 
-require '../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 $query = Connection::query('SELECT * FROM Accounts');
 $data = $query->fetch_all(1);
