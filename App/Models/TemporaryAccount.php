@@ -22,12 +22,12 @@ final readonly class TemporaryAccount implements IMailAccount
 
     public static function exists(string $username): bool
     {
-        return Connection::query('SELECT name FROM Accounts WHERE name=?', [$username])->num_rows === 1;
+        return Connection::query('SELECT name FROM Accounts WHERE name=? AND expires IS NOT NULL', [$username])->num_rows === 1;
     }
 
     public static function fromUsername(string $username): ?self
     {
-        $query = Connection::query('SELECT * FROM Accounts WHERE name=?', [$username]);
+        $query = Connection::query('SELECT * FROM Accounts WHERE name=? AND expires IS NOT NULL', [$username]);
 
         if ($query->num_rows === 0) {
             return null;
@@ -51,7 +51,7 @@ final readonly class TemporaryAccount implements IMailAccount
      */
     public static function getAll(): array
     {
-        $query = Connection::query('SELECT * FROM Accounts');
+        $query = Connection::query('SELECT * FROM Accounts WHERE expires IS NOT NULL');
         $data = $query->fetch_all(1);
 
         /**
