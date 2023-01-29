@@ -34,7 +34,7 @@ final readonly class PermanentAccount implements IMailAccount
      */
     public static function getAll(): array
     {
-        $commandOutput = SysCommand::runString('/usr/bin/getent group mail | /usr/bin/awk -F' . "':' '{print $4}'");
+        $commandOutput = SysCommand::runString('/usr/bin/getent group mail | ' . "/usr/bin/awk -F ':' '{print $4}'");
         $groupAccounts = explode(',', $commandOutput);
 
         /**
