@@ -56,11 +56,28 @@ $accounts = $this->getProperty('accounts');
         </div>
         <input type="password" id="password" name="password" max="64" placeholder="Password"
                value="<?= Random::stringSafe(32) ?>" required>
+        <button id="showPasswordBtn" onclick="showPassword()">Show</button>
     </div>
 
     <div>
         <button type="submit">Create</button>
     </div>
 </form>
+
+<script type="text/javascript">
+    function showPassword() {
+        const passwordField = document.getElementById('password');
+        const passwordFieldType = passwordField.getAttribute('type');
+        const showPasswordBtn = document.getElementById('showPasswordBtn');
+
+        if (passwordFieldType === 'password') {
+            passwordField.setAttribute('type', 'text');
+            showPasswordBtn.innerText = 'Hide';
+        } else {
+            passwordField.setAttribute('type', 'password');
+            showPasswordBtn.innerText = 'Show';
+        }
+    }
+</script>
 </body>
 </html>
