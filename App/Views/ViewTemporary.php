@@ -6,6 +6,7 @@ declare(strict_types=1);
  * @var TemporaryAccount[] $acccounts
  */
 
+use App\AppConfig;
 use App\Models\TemporaryAccount;
 use Sdk\Render\View;
 
@@ -39,5 +40,19 @@ $accounts = $this->getProperty('accounts');
     <?php } ?>
     </tbody>
 </table>
+<h3>Create temporary e-mail</h3>
+<form method="POST" action="/api/permanent/create">
+    <div>
+        <input type="text" name="username" maxlength="32" placeholder="Username - empty for random">
+    </div>
+
+    <div>
+        <input type="number" name="expirationMinutes" placeholder="Expiration minutes" min="30" max="<?= AppConfig::MAX_TEMPORARY_EMAIL_MINUTES ?>" value="30" required>
+    </div>
+
+    <div>
+        <button type="submit">Create</button>
+    </div>
+</form>
 </body>
 </html>

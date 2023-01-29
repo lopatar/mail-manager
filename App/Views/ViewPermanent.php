@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 use App\Models\PermanentAccount;
 use Sdk\Render\View;
+use Sdk\Utils\Hashing\PasswordProvider;
+use Sdk\Utils\Random;
 
 $accounts = $this->getProperty('accounts');
 ?>
@@ -37,5 +39,18 @@ $accounts = $this->getProperty('accounts');
     <?php } ?>
     </tbody>
 </table>
+<h3>Create permanent e-mail</h3>
+<form method="POST" action="/api/permanent/create">
+    <div>
+        <input type="text" name="username" maxlength="32" placeholder="Username" required>
+    </div>
+    <div>
+        <input type="password" name="password" max="64" placeholder="Password" value="<?= Random::stringSafe(32) ?>" required>
+    </div>
+
+    <div>
+        <button type="submit">Create</button>
+    </div>
+</form>
 </body>
 </html>

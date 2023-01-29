@@ -3,17 +3,23 @@ declare(strict_types=1);
 
 namespace App\Models\Traits;
 
+use App\Models\Enums\AccountStatus;
 use App\Utils\SysCommand;
 use Sdk\Database\MariaDB\Connection;
 
 trait AccountSystemUtilsTrait
 {
-    public function createSystemUser(): void
+    public function createSystemUser(bool $permanentAccount): void
     {
         if ($this->systemUserExists()) {
             return;
         }
 
+        SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $this->password) $this->username");
+
+        if (!$permanentAccount) {
+            Connection::query('UPDATE Accounts SET status=? WHERE user=?', [AccountStatus::CREATED->value, $this->username], 'is');
+        }
     }
 
     public function systemUserExists(): bool

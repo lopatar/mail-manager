@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Models\PermanentAccount;
 use Sdk\Http\Request;
 use Sdk\Http\Response;
+use Sdk\Middleware\CSRF;
 
 final class ManagePermanent
 {
@@ -29,6 +30,7 @@ final class ManagePermanent
 
         $response->createView('Management/Permanent.php')
             ?->setProperty('account', $account);
+
         return $response;
     }
 }

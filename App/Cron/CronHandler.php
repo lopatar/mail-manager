@@ -12,7 +12,7 @@ $data = $query->fetch_all(1);
 
 foreach ($data as $row) {
     if ($row['expires'] === null) {
-        //handle permanent account
+
         continue;
     }
 
@@ -20,12 +20,11 @@ foreach ($data as $row) {
 
     switch ($account->status) {
         case AccountStatus::WAITING_FOR_CREATION:
-
+            $account->createSystemUser(false);
             break;
         case AccountStatus::WAITING_FOR_DELETION:
             $account->deleteSystemUser();
             break;
-
     }
 }
 

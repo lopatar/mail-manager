@@ -7,4 +7,5 @@ abstract class AppConfig
 {
     public const EMAIL_DOMAIN = 'lopatar.me';
     public const ROUNDCUBE_LINK = 'https://mail.lopatar.me/';
+    public const MAX_TEMPORARY_EMAIL_MINUTES = 360;
 }
