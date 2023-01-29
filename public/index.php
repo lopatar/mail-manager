@@ -38,5 +38,6 @@ $app->get('/manage-temp/{username}', 'ManageTemporary::renderManage')
     ->setShouldEscape(true);
 
 $app->post('/api/permanent/create', 'ManagePermanent::createAccount');
+$app->post('/api/temporary/create', 'ManageTemporary::createAccount');
 
 $app->run();
