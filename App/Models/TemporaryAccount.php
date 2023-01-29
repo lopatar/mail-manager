@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\AppConfig;
+use App\Models\Enums\AccountStatus;
 use App\Models\Interfaces\IMailAccount;
 use App\Models\Traits\RoundcubeLinkTrait;
 use App\Models\Traits\AccountSystemUtilsTrait;
@@ -14,7 +15,7 @@ final readonly class TemporaryAccount implements IMailAccount
 {
     public string $emailAddress;
 
-    public function __construct(public string $username, public string $password, public int $expiresTimestamp, public string $status)
+    public function __construct(public string $username, public string $password, public int $expiresTimestamp, public AccountStatus $status)
     {
         $this->emailAddress = "$this->username@" . AppConfig::EMAIL_DOMAIN;
     }
@@ -34,7 +35,15 @@ final readonly class TemporaryAccount implements IMailAccount
 
         $data = $query->fetch_assoc();
 
-        return new self($data['name'], $data['password'], intval($data['expires']), $data['status']);
+        $expires = intval($data['expires']);
+        $status = AccountStatus::from($expires);
+
+        if (time() >= $expires)
+        {
+            $status = AccountStatus::WAITING_FOR_DELETION;
+        }
+
+        return new self($data['name'], $data['password'], $expires, $status);
     }
 
     /**
@@ -52,7 +61,15 @@ final readonly class TemporaryAccount implements IMailAccount
         $temporaryObjects = [];
 
         foreach ($data as $row) {
-            $temporaryObjects[] = new self($row['name'], $row['password'], intval($row['expires']), $row['status']);
+            $expires = intval($row['expires']);
+            $status = AccountStatus::from($expires);
+
+            if (time() >= $expires)
+            {
+                $status = AccountStatus::WAITING_FOR_DELETION;
+            }
+
+            $temporaryObjects[] = new self($row['name'], $row['password'], $expires, $status);
         }
 
         return $temporaryObjects;

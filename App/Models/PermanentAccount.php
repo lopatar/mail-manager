@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\AppConfig;
+use App\Models\Enums\AccountStatus;
 use App\Models\Interfaces\IMailAccount;
 use App\Models\Traits\RoundcubeLinkTrait;
 use App\Models\Traits\AccountSystemUtilsTrait;
@@ -13,7 +14,7 @@ final readonly class PermanentAccount implements IMailAccount
 {
     public string $emailAddress;
 
-    public function __construct(public string $username)
+    public function __construct(public string $username, public AccountStatus $status)
     {
         $this->emailAddress = "$this->username@" . AppConfig::EMAIL_DOMAIN;
     }
@@ -46,7 +47,7 @@ final readonly class PermanentAccount implements IMailAccount
                 continue;
             }
 
-            $mailObjects[] = new self($account);
+            $mailObjects[] = new self($account, AccountStatus::CREATED);
         }
 
         return $mailObjects;
