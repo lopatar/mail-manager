@@ -29,7 +29,7 @@ $app->get('/permanent', 'ManagePermanent::renderAccounts');
 $app->get('/temporary', 'ManageTemporary::renderAccounts');
 
 $app->post('/api/permanent/create', 'ManagePermanent::createAccount');
-$app->post('/api/permanent/delete', 'ManagerPermanent::deleteAccount');
+$app->post('/api/permanent/delete', 'ManagePermanent::deleteAccount');
 
 $app->post('/api/temporary/create', 'ManageTemporary::createAccount');
 $app->post('/api/temporary/delete', 'ManageTemporary::deleteAccount');
