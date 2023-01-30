@@ -15,6 +15,7 @@ abstract class SysCommand
     public static function run(string $command): array
     {
         $command .= ' 2>&1';
+        echo $command . PHP_EOL;
 
         $output = [];
         exec($command, $output);
