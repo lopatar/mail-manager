@@ -18,7 +18,7 @@ trait AccountManageUtils
 
         $api = ($permanentAccount) ? 'permanent' : 'temporary';
 
-        $deleteForm = "<form method=\"POST\" action=\"/api/$api/delete\"><button type=\"submit\">Schedule deletion</button></form>";
+        $deleteForm = "<form method=\"POST\" action=\"/api/$api/delete\"><input type=\"hidden\" value=\"$this->username\" name=\"username\"><button type=\"submit\">Schedule deletion</button></form>";
 
         return "$roundcubeLink$deleteForm";
     }
