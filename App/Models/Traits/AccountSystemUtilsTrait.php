@@ -15,7 +15,7 @@ trait AccountSystemUtilsTrait
             return;
         }
 
-        $password = ($permanentPassword) ? $permanentPassword : $this->password;
+        $password = ($permanentAccount) ? $permanentPassword : $this->password;
 
         SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $password) $this->username");
 
