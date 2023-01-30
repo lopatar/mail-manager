@@ -23,6 +23,7 @@ final readonly class PermanentAccount implements IMailAccount
 
     static function fromUsername(string $username): ?self
     {
+        //TODO: Refactor
         foreach (self::getAll() as $account) {
             if ($account->username === $username) {
                 return $account;
