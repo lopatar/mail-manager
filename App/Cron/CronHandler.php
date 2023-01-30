@@ -25,11 +25,18 @@ foreach ($data as $row) {
         continue;
     }
 
+    echo 'acc not null';
+    var_dump($acc);
+
     switch ($account->status) {
         case AccountStatus::WAITING_FOR_CREATION:
+            echo 'create';
+            var_dump($account);
             $account->createSystemUser($isPermanent);
             break;
         case AccountStatus::WAITING_FOR_DELETION:
+            echo 'deleete';
+            var_dump($account);
             $account->deleteSystemUser($isPermanent);
             break;
         case AccountStatus::CREATED:
