@@ -9,11 +9,12 @@ use Sdk\Database\MariaDB\Connection;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$query = Connection::query('SELECT * FROM Accounts');
-$data = $query->fetch_all(1);
-
 $config = new SdkConfig();
 Connection::init($config->getMariaDbHost(), $config->getMariaDbUsername(), $config->getMariaDbPassword(), $config->getMariaDbDatabaseName());
+
+
+$query = Connection::query('SELECT * FROM Accounts');
+$data = $query->fetch_all(1);
 
 foreach ($data as $row) {
     $isPermanent = is_null($row['expires']);
