@@ -21,9 +21,9 @@ trait AccountSystemUtilsTrait
         SysCommand::run("/usr/sbin/useradd -G mail -m -p $passwordHash $this->username");
 
         if ($permanentAccount) {
-            Connection::query('DELETE FROM Accounts WHERE user=?', [$this->username]);
+            Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
         } else {
-            Connection::query('UPDATE Accounts SET status=? WHERE user=?', [AccountStatus::CREATED->value, $this->username], 'is');
+            Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::CREATED->value, $this->username], 'is');
         }
     }
 
