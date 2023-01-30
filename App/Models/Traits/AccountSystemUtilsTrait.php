@@ -49,6 +49,6 @@ trait AccountSystemUtilsTrait
             return;
         }
 
-        Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::WAITING_FOR_DELETION->value, $this->username], ['is']);
+        Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::WAITING_FOR_DELETION->value, $this->username], 'is');
     }
 }
