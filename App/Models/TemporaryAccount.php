@@ -85,7 +85,7 @@ final readonly class TemporaryAccount implements IMailAccount
             return 'Expired';
         }
 
-        return date('j. n. Y', $this->expiresTimestamp);
+        return date('d.m.Y H:i:s', $this->expiresTimestamp);
     }
 
     public function isExpired(): bool
