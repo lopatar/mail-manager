@@ -11,20 +11,19 @@ trait AccountSystemUtilsTrait
 {
     public function createSystemUser(bool $permanentAccount, string $permanentPassword = ''): void
     {
+        if ($this->systemUserExists()) {
+            echo 'RETURN_EXITS' . PHP_EOL;
+            return;
+        }
+
+        $password = ($permanentAccount) ? $permanentPassword : $this->password;
+        var_dump(SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $password) $this->username")) . PHP_EOL;
+
         if ($permanentAccount) {
             Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
         } else {
             Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::CREATED->value, $this->username], 'is');
         }
-
-        if ($this->systemUserExists()) {
-            return;
-        }
-
-        $password = ($permanentAccount) ? $permanentPassword : $this->password;
-        $passwordHash = SysCommand::runString("openssl passwd -1 $password");
-
-        SysCommand::run("/usr/sbin/useradd -G mail -m -p $passwordHash $this->username");
     }
 
     public function systemUserExists(): bool
@@ -35,14 +34,14 @@ trait AccountSystemUtilsTrait
 
     public function deleteSystemUser(bool $isPermanent): void
     {
-        if (!$isPermanent) {
-            Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
-        }
-
         if (!$this->systemUserExists()) {
             return;
         }
 
         SysCommand::run("/usr/sbin/deluser --remove-all-files $this->username");
+
+        if (!$isPermanent) {
+            Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
+        }
     }
 }
