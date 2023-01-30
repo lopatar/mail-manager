@@ -26,7 +26,7 @@ foreach ($data as $row) {
     }
 
     echo 'acc not null';
-    var_dump($acc);
+    var_dump($account);
 
     switch ($account->status) {
         case AccountStatus::WAITING_FOR_CREATION:
