@@ -18,7 +18,7 @@ $data = $query->fetch_all(1);
 
 foreach ($data as $row) {
     $isPermanent = is_null($row['expires']);
-    $username = $row['user'];
+    $username = $row['name'];
 
     $account = ($isPermanent) ? PermanentAccount::fromUsername($username) : TemporaryAccount::fromUsername($username);
 
