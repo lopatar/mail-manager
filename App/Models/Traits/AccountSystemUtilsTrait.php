@@ -45,7 +45,7 @@ trait AccountSystemUtilsTrait
     public function scheduleDeletion(bool $permanentAccount): void
     {
         if ($permanentAccount) {
-            Connection::query('INSERT INTO Accounts(name, password, status) VALUES(?,?)', [$this->username, 'BLANK-PASSWORD', AccountStatus::WAITING_FOR_DELETION->value], 'ssi');
+            Connection::query('INSERT INTO Accounts(name, password, status) VALUES(?,?,?)', [$this->username, 'BLANK-PASSWORD', AccountStatus::WAITING_FOR_DELETION->value], 'ssi');
             return;
         }
 
