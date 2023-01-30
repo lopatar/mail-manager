@@ -15,15 +15,11 @@ Connection::init($config->getMariaDbHost(), $config->getMariaDbUsername(), $conf
 $query = Connection::query('SELECT * FROM Accounts');
 $data = $query->fetch_all(1);
 
-var_dump($data);
-
 foreach ($data as $row) {
     $isPermanent = is_null($row['expires']);
     $username = $row['name'];
 
     $account = ($isPermanent) ? PermanentAccount::fromUsername($username) : TemporaryAccount::fromUsername($username);
-
-    var_dump($account);
 
     if ($account === null) {
         continue;
