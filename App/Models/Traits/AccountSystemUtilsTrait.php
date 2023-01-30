@@ -9,13 +9,15 @@ use Sdk\Database\MariaDB\Connection;
 
 trait AccountSystemUtilsTrait
 {
-    public function createSystemUser(bool $permanentAccount): void
+    public function createSystemUser(bool $permanentAccount, string $permanentPassword = ''): void
     {
         if ($this->systemUserExists()) {
             return;
         }
 
-        SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $this->password) $this->username");
+        $password = ($permanentPassword) ? $permanentPassword : $this->password;
+
+        SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $password) $this->username");
 
         if ($permanentAccount) {
             Connection::query('DELETE FROM Accounts WHERE user=?', [$this->username]);
