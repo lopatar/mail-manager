@@ -36,7 +36,7 @@ final readonly class TemporaryAccount implements IMailAccount
         $data = $query->fetch_assoc();
 
         $expires = intval($data['expires']);
-        $status = AccountStatus::from($expires);
+        $status = AccountStatus::from($data['status']);
 
         if (time() >= $expires) {
             $status = AccountStatus::WAITING_FOR_DELETION;
