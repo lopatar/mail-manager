@@ -13,7 +13,7 @@ trait AccountManageUtils
         $roundcubeLink = AppConfig::ROUNDCUBE_LINK;
 
         if ($roundcubeLink !== null) {
-            $roundcubeLink = "<a target=\"_blank\" href=\"$roundcubeLink?user=$this->username\"><button>Redirect to Roundcube</button></a>";
+            $roundcubeLink = "<a target=\"_blank\" href=\"$roundcubeLink?_user=$this->username\"><button>Redirect to Roundcube</button></a>";
         }
 
         $api = ($permanentAccount) ? 'permanent' : 'temporary';
