@@ -17,9 +17,14 @@ $data = $query->fetch_all(1);
 
 foreach ($data as $row) {
     $isPermanent = is_null($row['expires']);
+    echo "isNull : $isPermanent" . PHP_EOL;
     $username = $row['name'];
+    echo "username : $isPermanent" . PHP_EOL;
 
     $account = ($isPermanent) ? PermanentAccount::fromUsername($username) : TemporaryAccount::fromUsername($username);
+
+    echo "account: " . PHP_EOL;
+    var_dump($account);
 
     if ($account === null) {
         continue;
@@ -27,12 +32,15 @@ foreach ($data as $row) {
 
     switch ($account->status->value) {
         case AccountStatus::WAITING_FOR_CREATION:
+            echo 'CREATION' . PHP_EOL;
             $account->createSystemUser($isPermanent);
             break;
         case AccountStatus::WAITING_FOR_DELETION:
+            echo 'DELETION' . PHP_EOL;
             $account->deleteSystemUser($isPermanent);
             break;
         case AccountStatus::CREATED:
+            echo 'ACC_CREATED?' . PHP_EOL;
             break;
     }
 }
