@@ -31,7 +31,7 @@ trait AccountSystemUtilsTrait
         return !str_contains($commandOutput, 'no such user');
     }
 
-    public function deleteSystemUser(bool $isPermanent): void
+    public function deleteSystemUser(): void
     {
         if (!$this->systemUserExists()) {
             return;
@@ -39,8 +39,16 @@ trait AccountSystemUtilsTrait
 
         SysCommand::run("/usr/sbin/deluser --remove-all-files $this->username");
 
-        if (!$isPermanent) {
-            Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
+        Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
+    }
+
+    public function scheduleDeletion(bool $permanentAccount): void
+    {
+        if ($permanentAccount) {
+            Connection::query('INSERT INTO Accounts(name, password, status) VALUES(?,?)', [$username, $password, AccountStatus::WAITING_FOR_DELETION->value], 'ssi');
+            return;
         }
+
+        Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::WAITING_FOR_DELETION->value, $this->username], ['is']);
     }
 }

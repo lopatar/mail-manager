@@ -3,41 +3,35 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\AppConfig;
 use App\Middleware\HtmlHeader;
 use App\SdkConfig;
+use App\Utils\Authentication;
 use Sdk\App;
 use Sdk\Middleware\HttpBasicAuth;
 
 $config = new SdkConfig();
 $app = new App($config);
 
-$users = [
-    ['username' => 'test', 'password' => '$2y$12$3W.teM8Ph5cp4CwZy9r0D.MtI.RYLW0kSsYpfvTrBio8tBevQCG2m']
-];
+$authenticatedUsers = Authentication::getUsers();
 
-
-$basicAuth = new HttpBasicAuth($users);
+$basicAuth = new HttpBasicAuth($authenticatedUsers);
 $htmlHeader = new HtmlHeader();
 
 $app->addMiddleware($basicAuth);
 $app->addMiddleware($htmlHeader);
+
+date_default_timezone_set(AppConfig::DEFAULT_TIMEZONE);
 
 $app->view('/', 'Home.html');
 
 $app->get('/permanent', 'ManagePermanent::renderAccounts');
 $app->get('/temporary', 'ManageTemporary::renderAccounts');
 
-$app->get('/manage/{username}', 'ManagePermanent::renderManage')
-    ?->whereParam('username')
-    ->setMaxLimit(255)
-    ->setShouldEscape(true);
-
-$app->get('/manage-temp/{username}', 'ManageTemporary::renderManage')
-    ?->whereParam('username')
-    ->setMaxLimit(255)
-    ->setShouldEscape(true);
-
 $app->post('/api/permanent/create', 'ManagePermanent::createAccount');
+$app->post('/api/permanent/delete', 'ManagerPermanent::deleteAccount');
+
 $app->post('/api/temporary/create', 'ManageTemporary::createAccount');
+$app->post('/api/temporary/delete', 'ManageTemporary::deleteAccount');
 
 $app->run();

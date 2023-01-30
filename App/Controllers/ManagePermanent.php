@@ -18,21 +18,6 @@ final class ManagePermanent
         return $response;
     }
 
-    public static function renderManage(Request $request, Response $response, array $args): Response
-    {
-        $account = PermanentAccount::fromUsername($args['username']);
-
-        if ($account === null) {
-            $response->addHeader('Location', '/permanent');
-            return $response;
-        }
-
-        $response->createView('Management/Permanent.php')
-            ?->setProperty('account', $account);
-
-        return $response;
-    }
-
     public static function createAccount(Request $request, Response $response, array $args): Response
     {
         $username = $request->getPost('username');
@@ -55,6 +40,23 @@ final class ManagePermanent
         }
 
         PermanentAccount::create($username, $password);
+        return $response;
+    }
+
+    public static function deleteAccount(Request $request, Response $response, array $args): Response
+    {
+        $username = $request->getPost('username');
+
+        $response->addHeader('Location', '/permanent');
+
+        if ($username === null) {
+            return $response;
+        }
+
+        $user = PermanentAccount::fromUsername($username);
+
+        $user?->scheduleDeletion(true);
+
         return $response;
     }
 }

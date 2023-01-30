@@ -11,7 +11,7 @@ interface IMailAccount
 
     static function fromUsername(string $username): ?self;
 
-    function getRoundcubeLink(): string;
+    function getManagementControls(bool $permanentAccount): string;
 
     function isCreated(): bool;
 
@@ -19,5 +19,7 @@ interface IMailAccount
 
     function systemUserExists(): bool;
 
-    function deleteSystemUser(bool $permanentAccount): void;
+    function deleteSystemUser(): void;
+
+    function scheduleDeletion(bool $permanentAccount): void;
 }

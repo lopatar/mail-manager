@@ -32,7 +32,7 @@ foreach ($data as $row) {
             $account->createSystemUser($isPermanent, $password);
             break;
         case AccountStatus::WAITING_FOR_DELETION:
-            $account->deleteSystemUser($isPermanent);
+            $account->deleteSystemUser();
             break;
         case AccountStatus::CREATED:
             break;

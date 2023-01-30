@@ -8,17 +8,19 @@ use App\Models\Enums\AccountStatus;
 
 trait AccountManageUtils
 {
-    function getRoundcubeLink(): string
+    function getManagementControls(bool $permanentAccount): string
     {
         $roundcubeLink = AppConfig::ROUNDCUBE_LINK;
 
-        if ($roundcubeLink === '') {
-            return '';
+        if ($roundcubeLink !== null) {
+            $roundcubeLink = "<button><a href=\"$roundcubeLink?user=$this->username\">Redirect to Roundcube</a></button>";
         }
 
-        $url = "$roundcubeLink?_user=$this->username";
+        $api = ($permanentAccount) ? 'permanent' : 'temporary';
 
-        return "<a href=\"$url\">Redirect to roundcube</a> | ";
+        $deleteForm = "<form method=\"POST\" action=\"/api/$api/delete\"><button type=\"submit\">Schedule deletion</button></form>";
+
+        return "$roundcubeLink$deleteForm";
     }
 
     function isCreated(): bool

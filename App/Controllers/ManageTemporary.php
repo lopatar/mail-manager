@@ -20,20 +20,6 @@ final class ManageTemporary
         return $response;
     }
 
-    public static function renderManage(Request $request, Response $response, array $args): Response
-    {
-        $account = TemporaryAccount::fromUsername($args['username']);
-
-        if ($account === null) {
-            $response->addHeader('Location', '/temporary');
-            return $response;
-        }
-
-        $response->createView('Management/Temporary.php')
-            ?->setProperty('account', $account);
-        return $response;
-    }
-
     public static function createAccount(Request $request, Response $response, array $args): Response
     {
         $username = $request->getPost('username');
@@ -60,6 +46,23 @@ final class ManageTemporary
         $password = Random::stringSafe(32);
 
         TemporaryAccount::create($username, $password, intval($expirationMinutes));
+
+        return $response;
+    }
+
+    public static function deleteAccount(Request $request, Response $response, array $args): Response
+    {
+        $username = $request->getPost('username');
+
+        $response->addHeader('Location', '/temporary');
+
+        if ($username === null) {
+            return $response;
+        }
+
+        $user = TemporaryAccount::fromUsername($username);
+
+        $user?->scheduleDeletion(false);
 
         return $response;
     }

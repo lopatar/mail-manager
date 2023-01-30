@@ -32,8 +32,7 @@ $accounts = $this->getProperty('accounts');
             <td><?= $account->status->name ?></td>
             <td>
                 <?php if ($account->isCreated()) { ?>
-                    <?= $account->getRoundcubeLink() ?>
-                    <a href="/manage/<?= $account->username ?>">Manage</a>
+                    <?= $account->getManagementControls(true) ?>
                 <?php } ?>
             </td>
         </tr>
@@ -82,4 +81,7 @@ $accounts = $this->getProperty('accounts');
     }
 </script>
 </body>
+<footer>
+    <a href="https://github.com/lopatar/mail-manager" target="_blank">Source code</a>
+</footer>
 </html>
