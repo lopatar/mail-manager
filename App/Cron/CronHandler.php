@@ -4,12 +4,16 @@ declare(strict_types=1);
 use App\Models\Enums\AccountStatus;
 use App\Models\PermanentAccount;
 use App\Models\TemporaryAccount;
+use App\SdkConfig;
 use Sdk\Database\MariaDB\Connection;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
 $query = Connection::query('SELECT * FROM Accounts');
 $data = $query->fetch_all(1);
+
+$config = new SdkConfig();
+Connection::init($config->getMariaDbHost(), $config->getMariaDbUsername(), $config->getMariaDbPassword(), $config->getMariaDbDatabaseName());
 
 foreach ($data as $row) {
     $isPermanent = is_null($row['expires']);
