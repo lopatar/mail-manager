@@ -30,7 +30,7 @@ foreach ($data as $row) {
         continue;
     }
 
-    switch ($account->status->value) {
+    switch ($account->status) {
         case AccountStatus::WAITING_FOR_CREATION:
             echo 'CREATION' . PHP_EOL;
             $account->createSystemUser($isPermanent);
