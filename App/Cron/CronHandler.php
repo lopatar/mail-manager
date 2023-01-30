@@ -13,7 +13,7 @@ $config = new SdkConfig();
 Connection::init($config->getMariaDbHost(), $config->getMariaDbUsername(), $config->getMariaDbPassword(), $config->getMariaDbDatabaseName());
 
 
-$query = Connection::query('SELECT * FROM Accounts');
+$query = Connection::query('SELECT *50 FROM Accounts');
 $data = $query->fetch_all(1);
 
 foreach ($data as $row) {

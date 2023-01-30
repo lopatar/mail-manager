@@ -18,7 +18,11 @@ trait AccountSystemUtilsTrait
         $password = ($permanentAccount) ? $permanentPassword : $this->password;
         $passwordHash = SysCommand::runString("openssl passwd -1 $password");
 
-        SysCommand::run("/usr/sbin/useradd -G mail -m -p $passwordHash $this->username");
+        var_dump($password);
+
+        $data = SysCommand::run("/usr/sbin/useradd -G mail -m -p $passwordHash $this->username");
+
+        var_dump($data);
 
         if ($permanentAccount) {
             Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
@@ -39,7 +43,9 @@ trait AccountSystemUtilsTrait
             return;
         }
 
-        SysCommand::run("/usr/sbin/deluser --remove-all-files $this->username");
+        $data = SysCommand::run("/usr/sbin/deluser --remove-all-files $this->username");
+
+        var_dump($data);
 
         if (!$isPermanent) {
             Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
