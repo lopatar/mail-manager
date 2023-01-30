@@ -12,7 +12,6 @@ trait AccountSystemUtilsTrait
     public function createSystemUser(bool $permanentAccount, string $permanentPassword = ''): void
     {
         if ($this->systemUserExists()) {
-            echo 'RETURN_EXITS' . PHP_EOL;
             return;
         }
 
