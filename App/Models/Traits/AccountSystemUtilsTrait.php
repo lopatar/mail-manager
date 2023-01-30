@@ -16,7 +16,7 @@ trait AccountSystemUtilsTrait
         }
 
         $password = ($permanentAccount) ? $permanentPassword : $this->password;
-        var_dump(SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $password) $this->username")) . PHP_EOL;
+        SysCommand::run("/usr/sbin/useradd -G mail -m -p $(openssl passwd -1 $password) $this->username");
 
         if ($permanentAccount) {
             Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
