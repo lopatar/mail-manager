@@ -1,8 +1,6 @@
 # Mail manager
 
-# NOT FINISHED
-
-Personal service, that is able to manage e-mail accounts, it is also able to generate temporary e-mail addresses
+Personal service, that is able to manage e-mail accounts, it is also able to generate temporary e-mail addresses.
 
 # Features
 
