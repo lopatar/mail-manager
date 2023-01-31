@@ -40,6 +40,8 @@ final readonly class PermanentAccount implements IMailAccount
         $commandOutput = SysCommand::runString('/usr/bin/getent group mail | ' . "/usr/bin/awk -F ':' '{print $4}'");
         $groupAccounts = explode(',', $commandOutput);
 
+        $pendingAccounts = self::getPendingAccounts();
+
         /**
          * @var self[] $mailObjects
          */
@@ -47,6 +49,10 @@ final readonly class PermanentAccount implements IMailAccount
 
         foreach ($groupAccounts as $account) {
             if (TemporaryAccount::exists($account)) {
+                continue;
+            }
+
+            if (self::exists($account, $pendingAccounts)) {
                 continue;
             }
 
@@ -76,11 +82,10 @@ final readonly class PermanentAccount implements IMailAccount
     }
 
     /**
-     * @param self[] $systemAccounts
      * @return self[]
      * @throws DatabaseObjectNotInitialized
      */
-    private static function getPendingAccounts(array $systemAccounts): array
+    private static function getPendingAccounts(): array
     {
         $query = Connection::query('SELECT * FROM Accounts WHERE expires IS NULL');
         $data = $query->fetch_all(1);
@@ -92,13 +97,7 @@ final readonly class PermanentAccount implements IMailAccount
         $mailObjects = [];
 
         foreach ($data as $row) {
-            $username = $row['name'];
-
-            if (self::exists($username, $systemAccounts)) {
-                continue;
-            }
-
-            $mailObjects[] = new self($username, AccountStatus::from(intval($row['status'])));
+            $mailObjects[] = new self($row['name'], AccountStatus::from(intval($row['status'])));
         }
 
         return $mailObjects;
