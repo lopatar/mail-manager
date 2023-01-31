@@ -89,7 +89,7 @@ final readonly class PermanentAccount implements IMailAccount
         $usernames = [];
 
         foreach ($data as $row) {
-            $username = $row['username'];
+            $username = $row['name'];
 
             if (in_array($username, $usernames)) {
                 continue;
