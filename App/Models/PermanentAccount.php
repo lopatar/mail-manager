@@ -64,24 +64,6 @@ final readonly class PermanentAccount implements IMailAccount
     }
 
     /**
-     * @param string $username
-     * @param PermanentAccount[] $accounts
-     * @return bool
-     */
-    public static function exists(string $username, ?array $accounts = null): bool
-    {
-        $accounts = $accounts ?? self::getAll();
-
-        foreach ($accounts as $account) {
-            if ($account->username === $username) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @return self[]
      * @throws DatabaseObjectNotInitialized
      */
@@ -101,6 +83,24 @@ final readonly class PermanentAccount implements IMailAccount
         }
 
         return $mailObjects;
+    }
+
+    /**
+     * @param string $username
+     * @param PermanentAccount[] $accounts
+     * @return bool
+     */
+    public static function exists(string $username, ?array $accounts = null): bool
+    {
+        $accounts = $accounts ?? self::getAll();
+
+        foreach ($accounts as $account) {
+            if ($account->username === $username) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static function create(string $username, string $password): void
