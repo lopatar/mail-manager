@@ -53,13 +53,20 @@ final readonly class PermanentAccount implements IMailAccount
             $mailObjects[] = new self($account, AccountStatus::CREATED);
         }
 
-        $pendingAccounts = self::getPendingAccounts();
+        $pendingAccounts = self::getPendingAccounts($mailObjects);
         return array_merge($mailObjects, $pendingAccounts);
     }
 
-    public static function exists(string $username): bool
+    /**
+     * @param string $username
+     * @param PermanentAccount[] $accounts
+     * @return bool
+     */
+    public static function exists(string $username, ?array $accounts = null): bool
     {
-        foreach (self::getAll() as $account) {
+        $accounts = $accounts ?? self::getAll();
+
+        foreach ($accounts as $account) {
             if ($account->username === $username) {
                 return true;
             }
@@ -69,10 +76,11 @@ final readonly class PermanentAccount implements IMailAccount
     }
 
     /**
+     * @param self[] $systemAccounts
      * @return self[]
      * @throws DatabaseObjectNotInitialized
      */
-    private static function getPendingAccounts(): array
+    private static function getPendingAccounts(array $systemAccounts): array
     {
         $query = Connection::query('SELECT * FROM Accounts WHERE expires IS NULL');
         $data = $query->fetch_all(1);
@@ -83,20 +91,14 @@ final readonly class PermanentAccount implements IMailAccount
 
         $mailObjects = [];
 
-        /**
-         * @var string[] $usernames
-         */
-        $usernames = [];
-
         foreach ($data as $row) {
             $username = $row['name'];
 
-            if (in_array($username, $usernames)) {
+            if (self::exists($username, $systemAccounts)) {
                 continue;
             }
 
             $mailObjects[] = new self($username, AccountStatus::from(intval($row['status'])));
-            $usernames[] = $username;
         }
 
         return $mailObjects;
