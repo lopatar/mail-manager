@@ -83,8 +83,20 @@ final readonly class PermanentAccount implements IMailAccount
 
         $mailObjects = [];
 
+        /**
+         * @var string[] $usernames
+         */
+        $usernames = [];
+
         foreach ($data as $row) {
-            $mailObjects[] = new self($row['name'], AccountStatus::from(intval($row['status'])));
+            $username = $row['username'];
+
+            if (in_array($username, $usernames)) {
+                continue;
+            }
+
+            $mailObjects[] = new self($username, AccountStatus::from(intval($row['status'])));
+            $usernames[] = $username;
         }
 
         return $mailObjects;
