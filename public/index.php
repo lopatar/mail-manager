@@ -28,6 +28,8 @@ $app->view('/', 'Home.html');
 $app->get('/permanent', 'ManagePermanent::renderAccounts');
 $app->get('/temporary', 'ManageTemporary::renderAccounts');
 
+$app->get('/imap/{username}', 'ImapView::fetchInbox');
+
 $app->post('/api/permanent/create', 'ManagePermanent::createAccount');
 $app->post('/api/permanent/delete', 'ManagePermanent::deleteAccount');
 
