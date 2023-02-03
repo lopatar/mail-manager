@@ -5,6 +5,7 @@ namespace App\Models\Traits;
 
 use App\AppConfig;
 use App\Models\Enums\AccountStatus;
+use Sdk\Database\MariaDB\Connection;
 
 trait AccountManageUtils
 {
@@ -26,5 +27,21 @@ trait AccountManageUtils
     function isCreated(): bool
     {
         return $this->status === AccountStatus::CREATED;
+    }
+
+    public function scheduleDeletion(bool $permanentAccount): void
+    {
+        if ($permanentAccount) {
+            $query = Connection::query('SELECT name FROM Accounts WHERE name=?', [$this->username]);
+
+            if ($query->num_rows === 1) {
+                return;
+            }
+
+            Connection::query('INSERT INTO Accounts(name, password, status) VALUES(?,?,?)', [$this->username, 'BLANK-PASSWORD', AccountStatus::WAITING_FOR_DELETION->value], 'ssi');
+            return;
+        }
+
+        Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::WAITING_FOR_DELETION->value, $this->username], 'is');
     }
 }

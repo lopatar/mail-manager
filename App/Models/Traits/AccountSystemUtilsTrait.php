@@ -31,6 +31,11 @@ trait AccountSystemUtilsTrait
         return !str_contains($commandOutput, 'no such user');
     }
 
+    public function changePassword(string $password): void
+    {
+        SysCommand::run("/usr/bin/echo -e \"$password\\n$password\" | /usr/bin/passwd $this->username");
+    }
+
     public function deleteSystemUser(): void
     {
         if (!$this->systemUserExists()) {
@@ -40,21 +45,5 @@ trait AccountSystemUtilsTrait
         SysCommand::run("/usr/sbin/deluser --remove-all-files $this->username");
 
         Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
-    }
-
-    public function scheduleDeletion(bool $permanentAccount): void
-    {
-        if ($permanentAccount) {
-            $query = Connection::query('SELECT name FROM Accounts WHERE name=?', [$this->username]);
-
-            if ($query->num_rows === 1) {
-                return;
-            }
-
-            Connection::query('INSERT INTO Accounts(name, password, status) VALUES(?,?,?)', [$this->username, 'BLANK-PASSWORD', AccountStatus::WAITING_FOR_DELETION->value], 'ssi');
-            return;
-        }
-
-        Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::WAITING_FOR_DELETION->value, $this->username], 'is');
     }
 }
