@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Models\PermanentAccount;
 use Sdk\Http\Request;
 use Sdk\Http\Response;
+use Sdk\Utils\Random;
 
 final class ManagePermanent
 {
@@ -56,6 +57,29 @@ final class ManagePermanent
         $user = PermanentAccount::fromUsername($username);
 
         $user?->scheduleDeletion(true);
+
+        return $response;
+    }
+
+    //TODO: Create route, and button
+
+    public static function rotatePassword(Request $request, Response $response, array $args): Response
+    {
+        $username = $request->getPost('username');
+
+        if ($username === null) {
+            $response->addHeader('Location', '/permanent');
+            return $response;
+        }
+
+        $newPassword = Random::stringSafe(48);
+        $user = PermanentAccount::fromUsername($username);
+
+        $user?->schedulePasswordRotation(true, $newPassword);
+
+        $response->createView('PasswordRotation.php')
+            ?->setProperty('username', $user->username)
+            ->setProperty('rotatedPassword', $newPassword);
 
         return $response;
     }

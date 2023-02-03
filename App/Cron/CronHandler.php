@@ -35,7 +35,8 @@ foreach ($data as $row) {
             $account->deleteSystemUser();
             break;
         case AccountStatus::WAITING_FOR_PASSWORD_CHANGE:
-            $account->changePassword($account->password); //permanent account is "temporary" in DB
+            $account->changePassword($isPermanent, $account->password);
+            break; //permanent account is "temporary" in DB
         case AccountStatus::CREATED:
             break;
     }

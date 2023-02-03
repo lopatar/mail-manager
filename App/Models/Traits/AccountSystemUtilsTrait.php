@@ -31,9 +31,20 @@ trait AccountSystemUtilsTrait
         return !str_contains($commandOutput, 'no such user');
     }
 
-    public function changePassword(string $password): void
+    public function changePassword(bool $permanentAccount, string $password): void
     {
+        if (!$this->systemUserExists()) {
+            return;
+        }
+
         SysCommand::run("/usr/bin/echo -e \"$password\\n$password\" | /usr/bin/passwd $this->username");
+
+         if ($permanentAccount) {
+            Connection::query('DELETE FROM Accounts WHERE name=?', [$this->username]);
+            return;
+        }
+
+        Connection::query('UPDATE Accounts SET status=? WHERE name=?', [AccountStatus::CREATED->value, $this->username], 'is');
     }
 
     public function deleteSystemUser(): void
