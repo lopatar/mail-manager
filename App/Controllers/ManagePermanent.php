@@ -78,7 +78,7 @@ final class ManagePermanent
         $user?->schedulePasswordRotation(true, $newPassword);
 
         $response->createView('PasswordRotation.php')
-            ?->setProperty('username', $user->username)
+            ?->setProperty('email', $user->emailAddress)
             ->setProperty('rotatedPassword', $newPassword);
 
         return $response;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\AppConfig;
+use App\Models\PermanentAccount;
 use App\Models\TemporaryAccount;
 use Sdk\Http\Request;
 use Sdk\Http\Response;
@@ -63,6 +64,27 @@ final class ManageTemporary
         $user = TemporaryAccount::fromUsername($username);
 
         $user?->scheduleDeletion(false);
+
+        return $response;
+    }
+
+    public static function rotatePassword(Request $request, Response $response, array $args): Response
+    {
+        $username = $request->getPost('username');
+
+        if ($username === null) {
+            $response->addHeader('Location', '/permanent');
+            return $response;
+        }
+
+        $newPassword = Random::stringSafe(48);
+        $user = TemporaryAccount::fromUsername($username);
+
+        $user?->schedulePasswordRotation(true, $newPassword);
+
+        $response->createView('PasswordRotation.php')
+            ?->setProperty('email', $user->emailAddress)
+            ->setProperty('rotatedPassword', $newPassword);
 
         return $response;
     }
