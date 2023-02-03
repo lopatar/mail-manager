@@ -25,7 +25,7 @@ foreach ($data as $row) {
         continue;
     }
 
-    $password = ($isPermanent) ? $row['password'] : $account->password;
+    $password = ($isPermanent && $account->status !== AccountStatus::WAITING_FOR_PASSWORD_CHANGE) ? $row['password'] : $account->password;
 
     switch ($account->status) {
         case AccountStatus::WAITING_FOR_CREATION:
