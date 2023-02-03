@@ -40,30 +40,32 @@ $accounts = $this->getProperty('accounts');
     </tbody>
 </table>
 <h3>Create permanent e-mail</h3>
-<form method="POST" action="/api/permanent/create">
-    <div>
+<div>
+    <form method="POST" action="/api/permanent/create">
         <div>
-            <label for="username">
-                Username
-            </label>
+            <div>
+                <label for="username">
+                    Username
+                </label>
+            </div>
+            <input type="text" id="username" name="username" maxlength="32" placeholder="Username" required>
         </div>
-        <input type="text" id="username" name="username" maxlength="32" placeholder="Username" required>
-    </div>
-    <div>
         <div>
-            <label for="password">
-                Password
-            </label>
+            <div>
+                <label for="password">
+                    Password
+                </label>
+            </div>
+            <input type="password" id="password" name="password" maxlength="64" minlength="24" placeholder="Password"
+                   value="<?= Random::stringSafe(48) ?>" required>
         </div>
-        <input type="password" id="password" name="password" maxlength="64" minlength="24" placeholder="Password"
-               value="<?= Random::stringSafe(48) ?>" required>
-        <button id="showPasswordBtn" onclick="showPassword()">Show</button>
-    </div>
 
-    <div>
-        <button type="submit">Create</button>
-    </div>
-</form>
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+    <button id="showPasswordBtn" onclick="showPassword()">Show password</button>
+</div>
 
 <script type="text/javascript">
     function showPassword() {

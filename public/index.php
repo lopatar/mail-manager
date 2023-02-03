@@ -31,7 +31,11 @@ $app->get('/temporary', 'ManageTemporary::renderAccounts');
 $app->post('/api/permanent/create', 'ManagePermanent::createAccount');
 $app->post('/api/permanent/delete', 'ManagePermanent::deleteAccount');
 
+$app->post('/api/permanent/rotate-password', 'ManagePermanent::rotatePassword');
+$app->post('/api/temporary/rotate-password', 'ManageTemporary::rotatePassword');
+
 $app->post('/api/temporary/create', 'ManageTemporary::createAccount');
 $app->post('/api/temporary/delete', 'ManageTemporary::deleteAccount');
+
 
 $app->run();
