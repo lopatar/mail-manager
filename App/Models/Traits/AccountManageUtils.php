@@ -22,7 +22,7 @@ trait AccountManageUtils
         $rotateForm = '';
 
         if ($permanentAccount) {
-            $rotateForm = "<form method=\"POST\" action=\"/api/$api/rotate-password\"><input type=\"hidden\" value=\"$this->username\"><button type=\"submit\">Rotate password</button>";
+            $rotateForm = "<form method=\"POST\" action=\"/api/$api/rotate-password\"><input type=\"hidden\" value=\"$this->username\"><button type=\"submit\">Rotate password</button></form>";
         }
 
         $deleteForm = "<form method=\"POST\" action=\"/api/$api/delete\"><input type=\"hidden\" value=\"$this->username\" name=\"username\"><button type=\"submit\">Schedule deletion</button></form>";
