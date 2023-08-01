@@ -14,7 +14,7 @@
   "license": "WTFPL",
   "name": "lopatar/mail-manager",
   "require": {
-    "lopatar/php-sdkv2": "^2.6",
+    "lopatar/php-sdkv2": "^2.7",
     "ext-openssl": "*"
   },
   "type": "project"
